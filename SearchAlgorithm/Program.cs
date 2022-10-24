@@ -1,11 +1,11 @@
 ﻿using System;
-
+using System.Runtime.Intrinsics.Arm;
 
 namespace SearchAlgorithm
 {
     class program
     {
-        //Arrat to be searched
+        //Array to be searched
         int[] arr = new int[20];
         //number of elements in the array 
         int n;
@@ -37,6 +37,44 @@ namespace SearchAlgorithm
                 arr[i] = Int32.Parse(s1);
             }
         }
+        public void binarySearch()
+        {
+            char ch;
+            do
+            {
+                //accept the number to be searched 
+                Console.Write("\nEnter elements want you to search: \n");
+                int item = Convert.ToInt32(Console.ReadLine());
 
+                //apply binary search 
+                int lowerbound = 0;
+                int upperbound = n - 1;
+
+                //obtain the indexx of the middle elements
+                int mid = (lowerbound + upperbound) / 2;
+                int ctr = 1;
+
+                //loop to search for the elements in the array 
+                while ((item != arr[mid]) && (lowerbound <= upperbound))
+                {
+                    if (item > arr[mid])
+                        lowerbound = mid + 1;
+                    else
+                        upperbound = mid - 1;
+
+                    mid = (lowerbound + upperbound) / 2;
+                    ctr++;
+                }
+                if (item == arr[mid])
+                    Console.WriteLine("\n" + item.ToString() + "found at position" + (mid + 1).ToString());
+                else
+                    Console.WriteLine("\n" + item.ToString() + "Not found in the array\n");
+                Console.WriteLine("\nNumber of comparasion : " + ctr);
+
+                Console.Write("\n Continue search (y/n):");
+                ch = char.Parse(Console.ReadLine());
+
+            } while ((ch == 'y') || (ch == 'Y'));
+        }
     }
 }
